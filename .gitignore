@@ -1,4 +1,16 @@
-.angular
-dist
-node_modules
+#dependencies
+/node_modules
+
+#Build Output
+/dist
+/angular
+
+#Env files
 .env
+.env.*
+!.env.example
+
+#IDE
+.idea
+.vscode/
+
