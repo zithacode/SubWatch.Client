@@ -1,0 +1,304 @@
+<div class="landing-page">
+  <!-- Navbar -->
+  <nav class="landing-nav">
+    <a routerLink="/" class="brand">
+      <span class="brand-icon">S</span>
+      <span>SubWatch</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How it works</a>
+      <a routerLink="/help-support">Support</a>
+    </div>
+
+    <div class="nav-actions">
+      @if(currentUser && isLoggedIn){
+      <span class="user-greeting">Hi, {{currentUser.fullName}}</span>
+      <a routerLink="/dashboard" class="btn-primary">Dashboard</a>
+      <a (click)="logout()" class="btn-logout">Sign out</a>
+      }@else{
+      <a routerLink="/login" class="login-link">Sign in</a>
+      <a routerLink="/register" class="nav-cta">Get started</a>
+      }
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-badge"> Your subscriptions, under control </span>
+
+      <h1>
+        Stop losing track of
+        <span>where your money goes.</span>
+      </h1>
+
+      <p>
+        Manage all your subscriptions in one place. Track recurring payments,
+        monitor your spending and stay ahead of your next billing date.
+      </p>
+
+      <div class="hero-actions">
+        @if(isLoggedIn){
+        <a routerLink="/add-subscription" class="primary-btn">
+          Start adding subscriptions for free → </a
+        >}@else{
+        <a routerLink="/register" class="primary-btn">
+          Start tracking for free →
+        </a>
+
+        <a href="#features" class="secondary-btn"> Explore features </a>
+        }
+      </div>
+
+      <div class="hero-note">
+        Simple subscription management. No spreadsheets needed.
+      </div>
+    </div>
+
+    <!-- Dashboard preview -->
+    @if(isLoggedIn){
+    <div class="hero-preview">
+      <div class="preview-window">
+        <div class="preview-header">
+          <div class="preview-brand">SubWatch</div>
+          <span>Overview</span>
+        </div>
+
+        <div class="preview-body">
+          @if(currentUser && isLoggedIn){
+          <p class="preview-greeting">
+            Welcome back,
+            <span class="greeting-name">
+              {{ currentUser.fullName.split(' ')[0] }}
+            </span>
+            👋
+          </p>
+          <h3>Here's your financial overview</h3>
+          <p class="preview-subtitle">
+            Stay on top of your subscriptions and keep your spending in check.
+          </p>
+          }@else{
+          <p class="preview-greeting">Take control of your spending ✨</p>
+          <h3>Your subscriptions, all in one place</h3>
+          <p class="preview-subtitle">
+            Get a clear picture of what you're paying for and what's coming
+            next.
+          </p>
+
+          } @if (loadingOverView) {
+          <div
+            class="bubble-loader"
+            role="status"
+            aria-label="Loading overview"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          } @else if (errorMessage) {
+          <div class="api-error">
+            <div class="error-icon">!</div>
+            <h4>We're having trouble connecting</h4>
+            <p>
+              We couldn't load your subscription overview. Please check your
+              connection and try again.
+            </p>
+            <button class="retry-btn" (click)="loadSubscriptions()">
+              Try again
+            </button>
+          </div>
+          }@else {
+
+          <h3>Subscription dashboard</h3>
+
+          <div class="preview-stats">
+            <div>
+              <span>Monthly spending</span>
+              <strong
+                >{{overViewMonthlyExpense | currency:
+                'ZAR':'symbol-narrow'}}</strong
+              >
+            </div>
+
+            <div>
+              <span>Active subscriptions</span>
+              <strong>{{ totalOverViewSubs}}</strong>
+            </div>
+          </div>
+
+          <div class="preview-list">
+            <h4>Your subscriptions</h4>
+            @for(sub of overViewSubs; track sub.id; let i = $index){
+
+            <div class="preview-item">
+              <span class="service-icon" [ngClass]="'service-color-'+(i%4)"
+                >{{sub.name.charAt(0).toUpperCase()}}</span
+              >
+              <div>
+                <strong>{{sub.name}}</strong>
+                <small>{{sub.category}}</small>
+              </div>
+              <strong>{{ sub.amount | currency: 'ZAR':'symbol-narrow'}}</strong>
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    }@else{
+    <div class="hero-preview">
+      <div class="preview-window">
+        <div class="preview-header">
+          <div class="preview-brand">SubWatch</div>
+          <span>Overview</span>
+        </div>
+
+        <div class="preview-body">
+          <p class="preview-greeting">Your financial overview</p>
+          <h3>Subscription dashboard</h3>
+
+          <div class="preview-stats">
+            <div>
+              <span>Monthly spending</span>
+              <strong>R1,849.00</strong>
+            </div>
+
+            <div>
+              <span>Active subscriptions</span>
+              <strong>7</strong>
+            </div>
+          </div>
+
+          <div class="preview-list">
+            <h4>Your subscriptions</h4>
+
+            <div class="preview-item">
+              <span class="service-icon netflix">N</span>
+              <div>
+                <strong>Netflix</strong>
+                <small>Entertainment</small>
+              </div>
+              <strong>R199.00</strong>
+            </div>
+
+            <div class="preview-item">
+              <span class="service-icon spotify">S</span>
+              <div>
+                <strong>Spotify</strong>
+                <small>Music</small>
+              </div>
+              <strong>R69.99</strong>
+            </div>
+
+            <div class="preview-item">
+              <span class="service-icon microsoft">M</span>
+              <div>
+                <strong>Microsoft 365</strong>
+                <small>Productivity</small>
+              </div>
+              <strong>R1,299.00</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </section>
+
+  <!-- Features -->
+  @if(!isLoggedIn){
+  <section class="features-section" id="features">
+    <div class="section-heading">
+      <span>FEATURES</span>
+      <h2>Everything your subscriptions need.</h2>
+      <p>One simple place to understand and manage your recurring expenses.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">◎</div>
+        <h3>All in one place</h3>
+        <p>
+          Keep track of all your recurring subscriptions from one dashboard.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">↗</div>
+        <h3>Understand your spending</h3>
+        <p>See how much your subscriptions cost monthly and annually.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">◷</div>
+        <h3>Never miss a payment</h3>
+        <p>Keep an eye on upcoming billing dates and payment schedules.</p>
+      </div>
+    </div>
+  </section>
+  }
+
+  <!-- How it works -->
+  @if(!isLoggedIn){
+  <section class="how-section" id="how-it-works">
+    <div class="section-heading">
+      <span>HOW IT WORKS</span>
+      <h2>Get started in three simple steps.</h2>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="step-number">01</span>
+        <h3>Create your account</h3>
+        <p>Sign up and get your personal subscription dashboard.</p>
+      </div>
+
+      <div class="step-card">
+        <span class="step-number">02</span>
+        <h3>Add your subscriptions</h3>
+        <p>Enter your services, billing amounts and payment dates.</p>
+      </div>
+
+      <div class="step-card">
+        <span class="step-number">03</span>
+        <h3>Stay in control</h3>
+        <p>Monitor your recurring expenses and upcoming payments.</p>
+      </div>
+    </div>
+  </section>
+  }
+
+  <!-- Final CTA -->
+  <section class="final-cta">
+    <h2>Your money deserves your attention.</h2>
+    <p>Take control of your recurring expenses with SubWatch.</p>
+    @if(isLoggedIn){
+    <a routerLink="/dashboard" class="primary-btn"> Go To Dashboard → </a>
+
+    }@else{
+    <a routerLink="/register" class="primary-btn"> Get started for free → </a>
+    }
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <a routerLink="/" class="brand">
+      <span class="brand-icon">S</span>
+      <span>SubWatch</span>
+    </a>
+
+    <p>© 2026 SubWatch. All rights reserved.</p>
+
+    <div>
+      @if(isLoggedIn){
+      <a style="cursor: pointer" (click)="logout()">Log out</a>
+      }@else{
+      <a routerLink="/help-support">Help & Support</a>
+      <a routerLink="/login">Sign in</a>
+      }
+    </div>
+  </footer>
+</div>

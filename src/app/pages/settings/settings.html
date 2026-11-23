@@ -1,0 +1,139 @@
+<div class="dashboard-layout">
+  <app-sidebar></app-sidebar>
+
+  <main class="dashboard-main">
+    <app-topbar></app-topbar>
+
+    <div class="dashboard-content">
+      <div class="settings-page">
+        <div class="page-header">
+          <div>
+            <h1>Settings</h1>
+            <p>Manage your account and application preferences.</p>
+          </div>
+        </div>
+
+        <section class="settings-card" [formGroup]="membershipForm">
+          <div class="settings-heading">
+            <h2>Profile Information</h2>
+            <p>Update your personal account details.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="fullName">Full name</label>
+            <input
+              id="fullName"
+              type="text"
+              placeholder="Enter your full name"
+              formControlName="fullName"
+            />
+            @if(membershipForm.controls.fullName.touched &&
+            membershipForm.controls.fullName.invalid){
+            <small class="field-error">Full name is required.</small>
+            } @if(membershipForm.controls.fullName.touched &&
+            membershipForm.controls.fullName.errors?.['minlength']){
+            <small class="field-error"
+              >Full name must not be less than 4.</small
+            >
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter your email address"
+              formControlName="email"
+            />
+            @if(membershipForm.controls.email.touched &&
+            membershipForm.controls.email.invalid){
+            <small class="field-error"
+              >Please enter a valid email address.</small
+            >
+            }
+          </div>
+
+          <button (click)="updateMemberInfo()" class="save-btn">
+            @if(isLoading()){ Saving... } @else { Update info }
+          </button>
+        </section>
+
+        <section class="settings-card">
+          <div class="settings-heading">
+            <h2>Preferences</h2>
+            <p>Customise how SubWatch works for you.</p>
+          </div>
+
+          <div class="preference-row">
+            <div>
+              <h3>Default currency</h3>
+              <p>Currency used when displaying subscription amounts.</p>
+            </div>
+
+            <select>
+              <option value="ZAR">South African Rand (ZAR)</option>
+              <option value="USD">US Dollar (USD)</option>
+              <option value="EUR">Euro (EUR)</option>
+              <option value="GBP">British Pound (GBP)</option>
+            </select>
+          </div>
+
+          <div class="preference-row">
+            <div>
+              <h3>Payment reminders</h3>
+              <p>Receive reminders before upcoming subscription payments.</p>
+            </div>
+
+            <label class="toggle">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </section>
+
+        <section class="settings-card danger-card">
+          <div class="settings-heading">
+            <h2>Account</h2>
+            <p>Manage your SubWatch account.</p>
+          </div>
+
+          <div class="preference-row">
+            <div>
+              <h3>Delete account</h3>
+              <p>Permanently delete your account and associated data.</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="deletePassword">Confirm your password</label>
+            <input
+              id="deletePassword"
+              type="password"
+              [(ngModel)]="deletePassword"
+              placeholder="Enter your current password"
+              #password="ngModel"
+              required
+            />
+            @if(deleteAccountError()){
+            <small class="field-error">{{ deleteAccountError() }}</small>
+            } @if(password.touched && password.invalid){
+            <small class="field-error1"
+              >Current account password is required.</small
+            >
+
+            }
+          </div>
+
+          <button
+            class="delete-btn"
+            (click)="deleteAccount()"
+            [disabled]="isDeletingAccount()|| password.invalid "
+          >
+            @if(isDeletingAccount()){ Deleting... } @else { Delete account }
+          </button>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>

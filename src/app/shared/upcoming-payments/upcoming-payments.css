@@ -1,0 +1,147 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.upcoming-card {
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+/* Header */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.section-header h2 {
+  margin: 0 0 6px;
+  color: #1e293b;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.section-header p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.calendar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #eef2ff;
+  color: #4f46e5;
+  font-size: 19px;
+}
+
+/* Payment rows */
+
+.payment-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.payment-item:first-child {
+  padding-top: 0;
+}
+
+.payment-item:last-child {
+  border-bottom: none;
+}
+
+.payment-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.payment-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.payment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.payment-name {
+  color: #1e293b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.payment-date {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.payment-amount {
+  flex-shrink: 0;
+  color: #1e293b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Footer button */
+
+.view-calendar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px 14px;
+  border: 1px solid #e0e7ff;
+  border-radius: 8px;
+  background: #f8faff;
+  color: #4f46e5;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.view-calendar-btn:hover {
+  background: #eef2ff;
+}
+
+@media (max-width: 600px) {
+  .upcoming-card {
+    padding: 18px;
+  }
+}

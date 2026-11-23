@@ -1,0 +1,61 @@
+<aside class="sidebar">
+  <!-- Brand -->
+  <div class="sidebar-brand">
+    <div class="brand-icon">S</div>
+    <span>SubWatch</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <p class="nav-heading">MENU</p>
+
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="nav-item"
+    >
+      <span class="nav-icon">⌂</span>
+      <span>Dashboard</span>
+    </a>
+
+    <a routerLink="/subscriptions" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">▤</span>
+      <span>Subscriptions</span>
+    </a>
+
+    <a routerLink="/calendar" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">▦</span>
+      <span>Calendar</span>
+    </a>
+
+    <a routerLink="/analytics" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">▥</span>
+      <span>Analytics</span>
+    </a>
+
+    <p class="nav-heading settings-heading">PREFERENCES</p>
+
+    <a routerLink="/settings" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">⚙</span>
+      <span>Settings</span>
+    </a>
+  </nav>
+
+  <!-- Bottom section -->
+  <div class="sidebar-footer">
+    <div class="sidebar-help">
+      <span class="nav-icon">?</span>
+      <span
+        ><a
+          class="nav-item"
+          routerLink="/help-support"
+          routerLinkActive="active"
+          >Help & Support</a
+        ></span
+      >
+    </div>
+
+    <div class="sidebar-version">SubWatch v1.0</div>
+  </div>
+</aside>

@@ -1,0 +1,148 @@
+<div class="dashboard-layout">
+  <app-sidebar></app-sidebar>
+
+  <main class="dashboard-main">
+    <app-topbar></app-topbar>
+
+    <div class="dashboard-content">
+      <div class="page-header">
+        <div>
+          <h1>Subscription Details</h1>
+          <p>View information about your subscription.</p>
+        </div>
+
+        <button routerLink="/subscriptions" class="back-btn">
+          ← Back to subscriptions
+        </button>
+      </div>
+
+      @if (loading()) {
+      <div class="loading-state">
+        <p>Loading subscription details...</p>
+      </div>
+      } @else if (errorMessage()) {
+      <div class="empty-state">
+        <h3>Unable to load subscription</h3>
+        <p>{{ errorMessage() }}</p>
+
+        <button routerLink="/subscriptions">Back to subscriptions</button>
+      </div>
+      } @else if (subscription(); as sub) {
+
+      <div class="details-card">
+        @if (isEditing()) {
+        <div class="details-heading">
+          <div>
+            <h2>Edit subscription</h2>
+            <p>Update your subscription information.</p>
+          </div>
+        </div>
+
+        <section [formGroup]="editForm" class="edit-form">
+          <div class="form-group">
+            <label for="name">Subscription name</label>
+            <input id="name" type="text" formControlName="name" />
+          </div>
+
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <input id="amount" type="number" formControlName="amount" />
+          </div>
+
+          <div class="form-group">
+            <label for="currency">Currency</label>
+            <select id="currency" formControlName="currency">
+              <option value="ZAR">ZAR</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="billingCycle">Billing cycle</label>
+            <select id="billingCycle" formControlName="billingCycle">
+              <option value="Monthly">Monthly</option>
+              <option value="Yearly">Yearly</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="startDate">Start date</label>
+            <input id="startDate" type="date" formControlName="startDate" />
+          </div>
+
+          <div class="form-group">
+            <label for="nextBillingDate">Next billing date</label>
+            <input
+              id="nextBillingDate"
+              type="date"
+              formControlName="nextBillingDate"
+            />
+          </div>
+
+          <div class="details-actions">
+            <button
+              type="button"
+              class="edit-btn"
+              [disabled]="editForm.invalid"
+              (click)="saveChanges()"
+            >
+              @if(isEditing() && isloadingApiResponse()){Saving...}@else{ Save
+              changes}
+            </button>
+
+            <button type="button" class="delete-btn" (click)="cancelEdit()">
+              Cancel
+            </button>
+          </div>
+        </section>
+
+        } @else {
+
+        <div class="details-heading">
+          <div>
+            <h2>{{ sub.name }}</h2>
+            <span [class.active]="sub.isActive" [class.paused]="!sub.isActive">
+              {{ sub.isActive ? 'Active' : 'Paused' }}
+            </span>
+          </div>
+          <div class="details-actions">
+            <button class="edit-btn" (click)="editingSubscription()">
+              Edit
+            </button>
+            <button class="delete-btn" (click)="deleteSubscription()">
+              Remove
+            </button>
+          </div>
+        </div>
+
+        <div class="details-grid">
+          <div class="detail-item">
+            <span>Amount</span>
+            <strong>
+              {{ sub.amount | currency:sub.currency:'symbol-narrow' }}
+            </strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Billing cycle</span>
+            <strong>{{ sub.billingCycle }}</strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Start date</span>
+            <strong>{{ sub.startDate | date:'dd MMM yyyy' }}</strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Next payment</span>
+            <strong>{{ sub.nextBillingDate | date:'dd MMM yyyy' }}</strong>
+          </div>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </main>
+</div>

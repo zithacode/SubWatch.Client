@@ -1,0 +1,123 @@
+<div class="dashboard-layout">
+  <app-sidebar></app-sidebar>
+
+  <main class="dashboard-main">
+    <app-topbar></app-topbar>
+
+    <div class="dashboard-content">
+      <div class="add-subscription-page">
+        <div class="page-header">
+          <div>
+            <h1>Add subscription</h1>
+            <p>Add a recurring payment to your SubWatch account.</p>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <h2>Subscription details</h2>
+          <p class="form-description">
+            Enter the details of the service you're subscribed to.
+          </p>
+
+          <form [formGroup]="addSubForm" (ngSubmit)="onSubmit()">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="name">Subscription name</label>
+                <input
+                  formControlName="name"
+                  type="text"
+                  id="name"
+                  placeholder="e.g. Netflix"
+                />
+
+                @if(addSubForm.controls.name.touched &&
+                addSubForm.controls.name.invalid){
+                <small class="field-error">Subscription name required.</small>
+                }
+              </div>
+
+              <div class="form-group">
+                <label for="amount">Amount</label>
+                <input
+                  formControlName="amount"
+                  type="number"
+                  id="amount"
+                  placeholder="e.g. 199.00"
+                />
+                @if(addSubForm.controls.amount.touched &&
+                addSubForm.controls.amount.invalid){
+                <small class="field-error">Subscription name required.</small>
+                }
+              </div>
+
+              <div class="form-group">
+                <label for="currency">Currency</label>
+                <select formControlName="currency" id="currency">
+                  <option value="ZAR">ZAR - South African Rand</option>
+                  <option value="USD">USD - US Dollar</option>
+                  <option value="EUR">EUR - Euro</option>
+                  <option value="GBP">GBP - British Pound</option>
+                </select>
+                @if(addSubForm.controls.currency.touched &&
+                addSubForm.controls.currency.invalid){
+                <small class="field-error">Subscription name required.</small>
+                }
+              </div>
+
+              <div class="form-group">
+                <label for="billingCycle">Billing cycle</label>
+                <select id="billingCycle" formControlName="billingCycle">
+                  <option value="Monthly">Monthly</option>
+                  <option value="Yearly">Yearly</option>
+                </select>
+                @if(addSubForm.controls.billingCycle.touched &&
+                addSubForm.controls.billingCycle.invalid){
+                <small class="field-error">Subscription name required.</small>
+                }
+              </div>
+
+              <div class="form-group">
+                <label for="startDate">Start date</label>
+                <input type="date" id="startDate" formControlName="startDate" />
+                @if(addSubForm.controls.startDate.touched &&
+                addSubForm.controls.startDate.invalid){
+                <small class="field-error">Subscription name required.</small>
+                }
+              </div>
+
+              <div class="form-group">
+                <label for="nextBillingDate">Next billing date</label>
+                <input
+                  type="date"
+                  id="nextBillingDate"
+                  formControlName="nextBillingDate"
+                />
+                @if(addSubForm.controls.nextBillingDate.touched &&
+                addSubForm.controls.nextBillingDate.invalid){
+                <small class="field-error">Subscription name required.</small>
+                }
+              </div>
+            </div>
+
+            @if(errorMessage) {
+            <p class="form-error" style="padding: 12px">{{ errorMessage}}</p>
+            }
+            <div class="form-actions">
+              <button
+                routerLink="/subscriptions"
+                type="button"
+                class="cancel-btn"
+              >
+                Cancel
+              </button>
+
+              <button [disabled]="loading" type="submit" class="submit-btn">
+                @if(loading){Adding Subscription...}@else{ Save subscription }
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

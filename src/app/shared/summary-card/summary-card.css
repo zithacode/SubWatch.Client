@@ -1,0 +1,89 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.summary-card {
+  padding: 24px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  min-height: 155px;
+  box-sizing: border-box;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+/* Card heading */
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.card-icon {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 19px;
+}
+
+.card-title {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Main value */
+.card-value {
+  color: #1e293b;
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+  margin-bottom: 7px;
+}
+
+.card-description {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+/* Colour variations */
+.purple .card-icon {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.green .card-icon {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.orange .card-icon {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.pink .card-icon {
+  background: #fce7f3;
+  color: #db2777;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .summary-card {
+    padding: 18px;
+  }
+
+  .card-value {
+    font-size: 23px;
+  }
+}

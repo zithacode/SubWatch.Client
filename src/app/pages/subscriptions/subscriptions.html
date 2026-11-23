@@ -1,0 +1,152 @@
+<div class="dashboard-layout">
+  <app-sidebar></app-sidebar>
+
+  <main class="dashboard-main">
+    <app-topbar></app-topbar>
+
+    <div class="dashboard-content">
+      <!-- Put your existing Subscriptions page HTML here -->
+
+      <div class="subscriptions-page">
+        <div class="page-header">
+          <div>
+            <h1>Subscriptions</h1>
+            <p>Manage and keep track of all your recurring payments.</p>
+          </div>
+
+          <button class="add-btn" routerLink="/add-subscription">
+            + Add subscription
+          </button>
+        </div>
+
+        <div class="summary-row">
+          <div class="summary-box">
+            <span>Total subscriptions</span>
+            <h2>{{totalCount}}</h2>
+          </div>
+
+          <div class="summary-box">
+            <span>Active subscriptions</span>
+            <h2>{{activeSubs}}</h2>
+          </div>
+
+          <div class="summary-box">
+            <span>Monthly spending</span>
+            <h2>{{totalExpense | currency:'ZAR':'symbol-narrow'}}</h2>
+          </div>
+        </div>
+
+        <div class="subscriptions-table-card">
+          <div class="table-header">
+            <div>
+              <h2>All subscriptions</h2>
+              <p>Your current and paused subscriptions</p>
+            </div>
+
+            <input
+              type="text"
+              placeholder="Search subscriptions..."
+              class="search-input"
+              name="searchText"
+              [(ngModel)]="searchText"
+              (input)="onChange()"
+            />
+          </div>
+          @if(errorMessage){
+          <div class="empty-state">
+            <h3>No subscriptions yet</h3>
+            <p>
+              You haven't added any subscriptions. Start tracking your recurring
+              payments.
+            </p>
+            <button routerLink="/add-subscription">
+              + Add your first subscription
+            </button>
+          </div>
+          }@else{
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Subscription</th>
+                  <th>Category</th>
+                  <th>Amount</th>
+                  <th>Billing cycle</th>
+                  <th>Next payment</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @for(subscription of subscriptions; track subscription.id){
+                <tr>
+                  <td>{{subscription.name}}</td>
+                  <td>
+                    @if(subscription.category){ {{subscription.category}}
+                    }@else{-}
+                  </td>
+                  <td>{{subscription.amount}}</td>
+                  <td>{{subscription.billingCycle}}</td>
+                  <td>{{subscription.nextBillingDate}}</td>
+                  <td>
+                    <span
+                      [class.active]="subscription.isActive"
+                      [class.paused]="!subscription.isActive"
+                      >@if(subscription.isActive){Active}@else{Paused}</span
+                    >
+                  </td>
+                  <td>
+                    <button
+                      [routerLink]="['/subscriptions',subscription.id]"
+                      title="View Subscriptions details"
+                      class="action-btn"
+                    >
+                      •••
+                    </button>
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          <!-- Pagination -->
+
+          <div class="pagination">
+            <button
+              class="pagination-btn"
+              [disabled]="currentPage <= 1 || loading"
+              (click)="prevPage()"
+            >
+              Prev
+            </button>
+            <span>Page {{currentPage }} of {{totalPages }}</span>
+            <button
+              class="pagination-btn"
+              [disabled]="currentPage >= totalPages || loading"
+              (click)="nextPage()"
+            >
+              Next
+            </button>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- loader -->
+<div [hidden]="!loading" class="loading-overlay">
+  <div class="loading-content">
+    <div class="bubble-loader">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <h3>Just a moment</h3>
+    <p>We're getting things ready for you...</p>
+  </div>
+</div>

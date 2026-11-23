@@ -1,0 +1,34 @@
+<div class="upcoming-card">
+  <div class="section-header">
+    <div>
+      <h2>Upcoming Payments</h2>
+      <p>Your next recurring charges</p>
+    </div>
+
+    <span class="calendar-icon">▦</span>
+  </div>
+
+  <div class="payment-list">
+    @for (payment of payments; track payment.id) {
+    <div class="payment-item">
+      <div class="payment-details">
+        <div class="payment-icon">{{ payment.name.charAt(0) }}</div>
+
+        <div class="payment-info">
+          <span class="payment-name">{{ payment.name }}</span>
+          <span class="payment-date">{{ payment.billingDate | date }}</span>
+        </div>
+      </div>
+
+      <div class="payment-amount">
+        {{ payment.currency }} {{ payment.amount.toFixed(2) }}
+      </div>
+    </div>
+    }
+  </div>
+
+  <button class="view-calendar-btn">
+    View payment calendar
+    <span>→</span>
+  </button>
+</div>

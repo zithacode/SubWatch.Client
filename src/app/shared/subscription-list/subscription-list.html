@@ -1,0 +1,61 @@
+<div class="subscription-card">
+  <div class="section-header">
+    <div>
+      <h2>My Subscriptions</h2>
+      <p>Manage your recurring payments</p>
+    </div>
+
+    <button routerLink="/subscriptions" class="view-all-btn">View all</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Subscription</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Billing Cycle</th>
+          <th>Next Payment</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (subscription of subscriptions; track subscription.id) {
+        <tr>
+          <td>
+            <div class="subscription-name">
+              <div class="subscription-icon">
+                {{ subscription.name.charAt(0) }}
+              </div>
+              <span>{{ subscription.name }}</span>
+            </div>
+          </td>
+
+          <td>
+            @if(subscription.category){ {{subscription.category}} } @else{-}
+          </td>
+
+          <td class="amount">
+            {{ subscription.currency }} {{ subscription.amount.toFixed(2) }}
+          </td>
+
+          <td>{{ subscription.billingCycle }}</td>
+
+          <td>{{ subscription.nextBillingDate | date }}</td>
+
+          <td>
+            <span
+              [class.active]="subscription.isActive"
+              [class.paused]="!subscription.isActive"
+            >
+              @if(subscription.isActive){ Active }@else{ Paused }
+            </span>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

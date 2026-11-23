@@ -1,0 +1,81 @@
+<div class="auth-page">
+  <span class="back-home" routerLink="/home">&larr; Back home</span>
+
+  <div class="auth-card">
+    <div class="brand">
+      <span class="brand-icon">S</span>
+      <span>SubWatch</span>
+    </div>
+
+    <div class="auth-heading">
+      <h1>Create your account</h1>
+      <p>Start taking control of your subscriptions.</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+          formControlName="email"
+        />
+        @if(registerForm.controls.email.touched &&
+        registerForm.controls.email.invalid){
+        <small class="field-error">Enter a valid email</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Create a password"
+          autocomplete="new-password"
+          required
+          formControlName="password"
+        />
+        @if(registerForm.controls.password.touched &&
+        registerForm.controls.password.errors?.['required']){
+        <small class="field-error">Password is required</small>
+        } @if(registerForm.controls.password.touched &&
+        registerForm.controls.password.errors?.['minlength']){
+        <small class="field-error">Password is required</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm password</label>
+        <input
+          id="confirmPassword"
+          type="password"
+          placeholder="Enter your password again"
+          autocomplete="new-password"
+          required
+          formControlName="confirmPassword"
+        />
+      </div>
+      @if(errorMessage){
+      <p class="form-error">{{errorMessage}}</p>
+      }
+      <button
+        [disabled]="registerForm.invalid"
+        type="submit"
+        class="submit-btn"
+      >
+        @if(loading){Creating account...} @else{Create account}
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Already have an account?
+      <a routerLink="/login">Sign in</a>
+    </p>
+
+    <p class="footer-text">SubWatch · Subscription management made simple</p>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+@if(isLoading()){
+<div class="loading-overlay">
+  <div class="loading-content">
+    <div class="bubble-loader">
+      <span></span>
+      <span></span>
+      <span></span>
+
+      <h3>Just a moment</h3>
+      <p>We're preparing your dashboard...</p>
+    </div>
+  </div>
+</div>
+}
+
+<div class="dashboard-layout">
+  <!-- Sidebar navigation -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main dashboard content -->
+  <main class="dashboard-main">
+    <!-- Header -->
+    <app-topbar></app-topbar>
+
+    <div class="dashboard-content">
+      <!-- Welcome section -->
+      <section class="welcome-section">
+        <div>
+          <h1>Good morning!</h1>
+          <p>Here's what's happening with your subscriptions.</p>
+        </div>
+
+        <button class="add-subscription-btn" routerLink="/add-subscription">
+          + Add subscription
+        </button>
+      </section>
+
+      <!-- Spending summary -->
+      <section class="summary-section">
+        <!-- <app-summary-card></app-summary-card> -->
+        @if(summary(); as data){
+        <app-summary-card
+          title="Totol Subscriptions"
+          [value]="data.totalSubscriptions.toString()"
+          description="All your subscriptions"
+          icon="📦"
+          color="purple"
+        >
+        </app-summary-card>
+
+        <app-summary-card
+          title="Active Subscriptions"
+          [value]="data.activeSubscriptions.toString()"
+          description="Currently active"
+          icon="✓"
+          color="blue"
+        >
+        </app-summary-card>
+
+        <app-summary-card
+          title="Monthly Spending"
+          [value]="data.monthlySpend | currency:'ZAR':'symbol-narrow':'1.2-2'"
+          description="Your estimated monthly spend"
+          icon="💰"
+          color="green"
+        >
+        </app-summary-card>
+
+        <app-summary-card
+          title="Yearly Spending"
+          [value]="data.yearlySpend | currency:'ZAR':'symbol-narrow':'1.2-2'"
+          description="Your estimated yearly spend"
+          icon="📊"
+          color="orange"
+        >
+        </app-summary-card>
+        }
+      </section>
+
+      <!-- Charts and upcoming payments -->
+      <section class="overview-grid">
+        <app-spending-chart></app-spending-chart>
+        <app-upcoming-payments
+          [payments]="upcomingPayments()"
+        ></app-upcoming-payments>
+      </section>
+
+      <!-- Subscription list -->
+      <section class="subscriptions-section">
+        <app-subscription-list
+          [subscriptions]="subscriptions()"
+        ></app-subscription-list>
+      </section>
+    </div>
+  </main>
+</div>

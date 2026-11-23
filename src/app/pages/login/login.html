@@ -1,0 +1,98 @@
+<div class="auth-page">
+  <span class="back-home" routerLink="/home">&larr; Back home</span>
+  <div class="auth-card">
+    <div class="brand">
+      <span class="brand-icon">S</span>
+      <span>SubWatch</span>
+    </div>
+
+    <div class="auth-heading">
+      <h1>Welcome back</h1>
+      <p>Sign in to manage your subscriptions.</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+          formControlName="email"
+        />
+        @if(loginForm.controls.email.touched &&
+        loginForm.controls.email.invalid){
+        <small class="field-error">Enter a valid email address.</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <!-- <input
+          formControlName="password"
+          id="password"
+          type="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          required
+        /> -->
+
+        <!-- eye thing -->
+        <div class="password-wrapper">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="Enter your password"
+            required
+            autocomplete="current-password"
+          />
+
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          >
+            <i
+              class="fa fa-fw fa-eye"
+              [ngClass]="showPassword? '':'fa-eye fa-eye-slash'"
+            ></i>
+          </button>
+        </div>
+        @if(loginForm.controls.password.touched &&
+        loginForm.controls.password.errors?.['required']){
+        <small class="field-error">Password is required.</small>
+        } @if(loginForm.controls.password.touched &&
+        loginForm.controls.password.invalid){
+        <small class="field-error">Password is required.</small>
+        }
+      </div>
+
+      <div class="form-options">
+        <label class="remember-me">
+          <input type="checkbox" />
+          <span>Remember me</span>
+        </label>
+
+        <a routerLink="/forgot-password">Forgot password?</a>
+      </div>
+      @if(errorMessage) {
+      <p class="form-error">{{ errorMessage}}</p>
+      }
+
+      <button type="submit" class="submit-btn">
+        @if(loading){Signing in...}@else{Sing in}
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Don't have an account?
+      <a routerLink="/register">Create account</a>
+    </p>
+
+    <p class="footer-text">SubWatch · Subscription management made simple</p>
+  </div>
+</div>

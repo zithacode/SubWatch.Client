@@ -1,0 +1,31 @@
+<header class="topbar">
+  <div class="topbar-left">
+    <div class="breadcrumb">
+      <span routerLink="/home">Home</span>
+      <span class="breadcrumb-divider">/</span>
+      <strong>{{pageTitle}}</strong>
+    </div>
+  </div>
+
+  <div class="topbar-right">
+    <!-- Notifications -->
+    <button class="icon-button" aria-label="Notifications">
+      <span class="notification-icon">♧</span>
+      <span class="notification-dot"></span>
+    </button>
+
+    <!-- Profile -->
+    <div class="profile-section">
+      <div class="profile-avatar">
+        {{currentUser?.fullName?.charAt(0)?.toUpperCase() || 'U' }}
+      </div>
+
+      <div class="profile-info">
+        <span class="profile-name">{{ currentUser?.fullName || 'User'}}</span>
+        <span class="profile-role">{{currentUser?.email}}</span>
+      </div>
+
+      <span class="btn-logout" (click)="logout()"> Logout </span>
+    </div>
+  </div>
+</header>
